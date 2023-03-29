@@ -32,7 +32,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV OPENAI_API_KEY=""
-ENV CODE=""
+ENV CODE="Cjm2536.."
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
