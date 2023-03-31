@@ -102,7 +102,7 @@ export function ChatList() {
       state.currentSessionIndex,
       state.selectSession,
       state.removeSession,
-    ]
+    ],
   );
 
   return (
@@ -128,7 +128,7 @@ function useSubmitHandler() {
 
   const shouldSubmit = (e: KeyboardEvent) => {
     if (e.key !== "Enter") return false;
- 
+
     return (
       (config.submitKey === SubmitKey.AltEnter && e.altKey) ||
       (config.submitKey === SubmitKey.CtrlEnter && e.ctrlKey) ||
@@ -170,7 +170,10 @@ export function PromptHints(props: {
   );
 }
 
-export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean }) {
+export function Chat(props: {
+  showSideBar?: () => void;
+  sideBarShowing?: boolean;
+}) {
   type RenderMessage = Message & { preview?: boolean };
 
   const chatStore = useChatStore();
@@ -194,7 +197,7 @@ export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean
       setPromptHints(promptStore.search(text));
     },
     100,
-    { leading: true, trailing: true }
+    { leading: true, trailing: true },
   );
 
   const onPromptSelect = (prompt: Prompt) => {
@@ -206,10 +209,14 @@ export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean
   // only search prompts when user input is short
   const SEARCH_TEXT_LIMIT = 30;
   const onInput = (text: string) => {
-    const textareaDom = inputRef.current
+    const textareaDom = inputRef.current;
     if (textareaDom) {
-      const paddingBottomNum: number = parseInt(window.getComputedStyle(textareaDom).paddingBottom, 10);
-      textareaDom.scrollTop = textareaDom.scrollHeight - textareaDom.offsetHeight + paddingBottomNum;
+      const paddingBottomNum: number = parseInt(
+        window.getComputedStyle(textareaDom).paddingBottom,
+        10,
+      );
+      textareaDom.scrollTop =
+        textareaDom.scrollHeight - textareaDom.offsetHeight + paddingBottomNum;
     }
     setUserInput(text);
     const n = text.trim().length;
@@ -285,7 +292,7 @@ export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean
               preview: true,
             },
           ]
-        : []
+        : [],
     )
     .concat(
       userInput.length > 0
@@ -297,7 +304,7 @@ export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean
               preview: true,
             },
           ]
-        : []
+        : [],
     );
 
   // auto scroll
@@ -380,32 +387,33 @@ export function Chat(props: { showSideBar?: () => void, sideBarShowing?: boolean
                   </div>
                 )}
                 <div className={styles["chat-message-item"]}>
-                  {(!isUser && !(message.preview || message.content.length === 0)) && (
-                    <div className={styles["chat-message-top-actions"]}>
-                      {message.streaming ? (
-                        <div
-                          className={styles["chat-message-top-action"]}
-                          onClick={() => onUserStop(i)}
-                        >
-                          {Locale.Chat.Actions.Stop}
-                        </div>
-                      ) : (
-                        <div
-                          className={styles["chat-message-top-action"]}
-                          onClick={() => onResend(i)}
-                        >
-                          {Locale.Chat.Actions.Retry}
-                        </div>
-                      )}
+                  {!isUser &&
+                    !(message.preview || message.content.length === 0) && (
+                      <div className={styles["chat-message-top-actions"]}>
+                        {message.streaming ? (
+                          <div
+                            className={styles["chat-message-top-action"]}
+                            onClick={() => onUserStop(i)}
+                          >
+                            {Locale.Chat.Actions.Stop}
+                          </div>
+                        ) : (
+                          <div
+                            className={styles["chat-message-top-action"]}
+                            onClick={() => onResend(i)}
+                          >
+                            {Locale.Chat.Actions.Retry}
+                          </div>
+                        )}
 
-                      <div
-                        className={styles["chat-message-top-action"]}
-                        onClick={() => copyToClipboard(message.content)}
-                      >
-                        {Locale.Chat.Actions.Copy}
+                        <div
+                          className={styles["chat-message-top-action"]}
+                          onClick={() => copyToClipboard(message.content)}
+                        >
+                          {Locale.Chat.Actions.Copy}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                   {(message.preview || message.content.length === 0) &&
                   !isUser ? (
                     <LoadingIcon />
@@ -560,7 +568,7 @@ export function Home() {
       state.newSession,
       state.currentSessionIndex,
       state.removeSession,
-    ]
+    ],
   );
   const loading = !useHasHydrated();
   const [showSideBar, setShowSideBar] = useState(true);
@@ -586,9 +594,7 @@ export function Home() {
       >
         <div className={styles["sidebar-header"]}>
           <div className={styles["sidebar-title"]}>ChatGPT Next</div>
-          <div className={styles["sidebar-sub-title"]}>
-            Build your own AI assistant.
-          </div>
+          <div className={styles["sidebar-sub-title"]}>Nicknames2</div>
           <div className={styles["sidebar-logo"]}>
             <ChatGptIcon />
           </div>
@@ -653,7 +659,11 @@ export function Home() {
             }}
           />
         ) : (
-          <Chat key="chat" showSideBar={() => setShowSideBar(true)} sideBarShowing={showSideBar} />
+          <Chat
+            key="chat"
+            showSideBar={() => setShowSideBar(true)}
+            sideBarShowing={showSideBar}
+          />
         )}
       </div>
     </div>
